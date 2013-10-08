@@ -1,0 +1,13 @@
+diff --git a/Lib/test/test_urllib.py b/Lib/test/test_urllib.py
+index 3a273f8..d4be28f 100644
+--- a/Lib/test/test_urllib.py
++++ b/Lib/test/test_urllib.py
+@@ -222,6 +222,7 @@ Content-Type: text/html; charset=iso-8859-1
+         finally:
+             self.unfakehttp()
+ 
++    @unittest._skipInRpmBuild('Disabling network test')
+     def test_missing_localfile(self):
+         self.assertRaises(IOError, urllib.urlopen,
+                 'file://localhost/a/missing/file.py')
+
