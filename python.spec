@@ -144,7 +144,9 @@ BuildRequires: libdb4-devel
 # it (in pyexpat) in order to enable the fix in Python-2.7.3 for CVE-2012-0876:
 #
 # [grosskur]: This fix is present in expat-2.0.1-11.el6_2 shipped with CentOS 6.
+%if 0%{?rhel} != 5
 BuildRequires: expat-devel >= 2.0.1-11
+%endif
 
 BuildRequires: findutils
 BuildRequires: gcc-c++
@@ -818,7 +820,11 @@ Group: Applications/System
 # this symbol (in pyexpat), so we must explicitly state this dependency to
 # prevent "import pyexpat" from failing with a linker error if someone hasn't
 # yet upgraded expat:
-Requires: expat >= 2.0.1-11.9
+#
+# [grosskur]: This fix is present in expat-2.0.1-11.el6_2 shipped with CentOS 6.
+%if 0%{?rhel} != 5
+Requires: expat >= 2.0.1-11
+%endif
 
 %description libs
 This package contains runtime libraries for use by Python:
@@ -948,7 +954,9 @@ cp -a %{SOURCE5} .
 # Ensure that we're using the system copy of various libraries, rather than
 # copies shipped by upstream in the tarball:
 #   Remove embedded copy of expat:
+%if 0%{?rhel} != 5
 rm -r Modules/expat || exit 1
+%endif
 
 #   Remove embedded copy of libffi:
 for SUBDIR in darwin libffi libffi_arm_wince libffi_msvc libffi_osx ; do
@@ -1159,7 +1167,9 @@ BuildPython() {
   --enable-shared \
   --enable-unicode=%{unicode} \
   --with-dbmliborder=gdbm:ndbm:bdb \
+%if 0%{?rhel} != 5
   --with-system-expat \
+%endif
   --with-system-ffi \
 %if 0%{?with_systemtap}
   --with-dtrace \
